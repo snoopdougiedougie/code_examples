@@ -7,7 +7,8 @@ import sys
 
 
 def usage():
-    print('Usage: python todo.py [-d] [-h] -f FILENAME')
+    print(
+        'Usage: python todo.py [-d] [-h] -f FILENAME [-t TITLE] [-l LIST-ID] [-i ITEM-ID]')
     print(' -d (--debug)            displays additional information')
     print(' -h (--help)             displays this usage information and quits')
     print(' -f (--file) FILENAME    opens the (JSON) file containing a query or mutation')

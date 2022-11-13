@@ -13,6 +13,16 @@ You must set two environment variables to make this work for any of the language
 - **API_KEY** is your Grafbase API key.
 - **ENDPOINT** is the endpoint for your Grafbase project.
 
+To set an environment variable on Linux, Mac, etc:
+
+`export VARIABLE=VALUE`
+
+To set an environment variable on Windows:
+
+`set VARIABLE=NAME`
+
+Use the app's `-h` flag to see the arguments it accepts.
+
 The json files can also contain placeholders for various values:
 
 - **TITLE** is the title for a new todo list or todo list item.
