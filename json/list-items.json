@@ -1,0 +1,1 @@
+{"query":"{ todoListCollection(first: 7) { edges { node { id title todos { id title } } } } }"}

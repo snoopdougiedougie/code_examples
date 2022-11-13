@@ -1,0 +1,1 @@
+{"query":"mutation { todoListCreate(input: {title: \"TITLE\"}) { todoList { id, title } } }"}

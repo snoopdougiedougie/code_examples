@@ -1,0 +1,76 @@
+List todo lists and their items
+===============================
+{
+  todoListCollection(first: 10) {
+    edges {
+      node {
+        id
+        title
+        todos(first: 10) {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+Response
+--------
+{
+  "data": {
+    "todoListCollection": {
+      "edges": [
+        {
+          "node": {
+            "id": "todolist_01GEHMAANNR1TKVA7APB9T173X",
+            "title": "MyGroovyToDoList",
+            "todos": {
+              "edges": [
+                {
+                  "node": {
+                    "id": "todo_01GEHN9WQ41SREDF5CTMG6Y88A",
+                    "title": "Another list item"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+Add a todo item to a list
+=========================
+mutation {
+  todoCreate(
+    input: {
+      title: "Invite members"
+    }
+  ) {
+    todo {
+      id
+      title
+    }
+  }
+}
+
+Response
+--------
+{
+  "data": {
+    "todoCreate": {
+      "todo": {
+        "id": "todo_01GEMY05A8AGK1C3MQS7ZMZ1GX",
+        "title": "Invite members"
+      }
+    }
+  }
+}
+
