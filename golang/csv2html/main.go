@@ -15,23 +15,13 @@ type Context struct {
 	HasTitles bool
 }
 
-func debugPrint(debug bool, s string) {
-	if debug {
-		fmt.Println(s)
-	}
-}
-
 // We get two possible forms of strings:
 // If context.HasTitle, a title row, where the row contains headings for the following rows (<th>)
 // Data row, which we convert into separate cells (<td>)
-func processLine(debug bool, context Context, s string) Context {
+func processLine(context Context, s string) Context {
 	// If the string ends in a comma, delete it
 	s = strings.TrimRight(s, ",")
 	parts := strings.Split(s, ",")
-
-	if debug {
-		fmt.Println("#Parts: ", len(parts), "NumRows: ", context.NumRows)
-	}
 
 	// By default, a row is data
 	cellStart := "        <td>"
@@ -74,10 +64,13 @@ func processLine(debug bool, context Context, s string) Context {
 
 func usage() {
 	fmt.Println("go run main.go -f FILE.csv [-t] [-h] ")
+	fmt.Println("where:")
+	fmt.Println("  FILE.csv is the name of the file containing comma-separated values.")
+	fmt.Println("  -t means that if row N+1 has more cells than row N, the first row has titles for the subsequent rows.")
+	fmt.Println("  Prints this help message and quits.")
 }
 
 func main() {
-	dbgPtr := flag.Bool("d", false, "Whether to barf out extra info")
 	filePtr := flag.String("f", "", "The name of the CSV file.")
 	titlePtr := flag.Bool("t", false, "Whether each new size of rows has an initial title row")
 	helpPtr := flag.Bool("h", false, "Whether to show the usage info")
@@ -92,8 +85,6 @@ func main() {
 		fmt.Println("You must specify a CSV file with -f FILE.csv")
 		os.Exit(1)
 	}
-
-	debugPrint(*dbgPtr, "Debugging is enabled.")
 
 	context := Context{
 		NumRows:   0,
@@ -116,7 +107,7 @@ func main() {
 
 	for scanner.Scan() {
 		txt := scanner.Text()
-		context = processLine(*dbgPtr, context, txt)
+		context = processLine(context, txt)
 
 		if err := scanner.Err(); err != nil {
 			fmt.Println("Got an error reading " + *filePtr)
