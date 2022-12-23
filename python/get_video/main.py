@@ -13,6 +13,9 @@ def Download(link):
 
 def main():
     link = input("Enter the YouTube video URL: ")
+
+    print("Downloading:", link)
+
     Download(link)
 
 
