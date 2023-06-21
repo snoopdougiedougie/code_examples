@@ -1,0 +1,1 @@
+{"query":"mutation { todoDelete( id: \"ITEM-ID\" ) { deletedId } }"}

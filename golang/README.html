@@ -1,0 +1,51 @@
+<h1 id="golang">Go(lang)</h1>
+<h2 id="getting-the-latest-version-of-go">Getting the latest version of
+go</h2>
+<p>Navigate to the <a href="https://go.dev/doc/install">go installation
+page</a>, download the latest bits and install them. (1.20.3 for Windows
+when this was written).</p>
+<h2 id="using-multiple-go-environments">Using multiple Go
+environments</h2>
+<p>You can download, install, and use different versions of Go, where
+VERSION is a Go version, such as <em>1.17</em>:</p>
+<pre class="console"><code>go install golang.org/dl/goVERSION@latest
+goVERSION download
+alias go=&quot;goVERSION&quot;
+
+Make sure you did it correctly:
+
+```console
+go version</code></pre>
+<p>Which should show something like:</p>
+<pre class="console"><code>go version go1.17 windows/amd64</code></pre>
+<h2 id="creating-a-new-go-project">Creating a new go project</h2>
+<p>The following command creates a new project <em>PROJECT-NAME</em>, in
+the folder <em>PROJECT-NAME</em> within the current folder.</p>
+<pre class="console"><code>mkdir PROJECT-NAME
+cd PROJECT-NAME</code></pre>
+<h2 id="adding-source-code">Adding source code</h2>
+<p>Create the standard Go source file, <strong>main.go</strong>:</p>
+<pre class="console"><code>vi main.go</code></pre>
+<p>Add the following to <strong>main.go</strong>:</p>
+<pre class="golang"><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    fmt.Println(&quot;Hello, world.&quot;)
+}</code></pre>
+<p>Initialize the project (creates <em>go.mod</em>) and :</p>
+<pre class="console"><code>go mod init main</code></pre>
+<p>Run the following commands from the root of <em>PROJECT-NAME</em> to:
+- clean up the source files - vet the source files - lint the project -
+build the project</p>
+<pre class="console"><code>go mod tidy
+go vet *.go
+golangci-lint run
+go build</code></pre>
+<p>Fix any problems, rinse and repeat.</p>
+<p>Run either of the following commands to run the app:</p>
+<pre class="console"><code>./main.exe
+go run main.go</code></pre>
+<p>Either should display:</p>
+<pre class="console"><code>Hello, world.</code></pre>

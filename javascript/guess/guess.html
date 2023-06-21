@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Number guessing game</title>
+
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+
+        body {
+            width: 50%;
+            max-width: 800px;
+            min-width: 480px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Guess a number</h1>
+    <p>
+        Try to guess a number between 1 - 100.
+    </p>
+
+    <div class="form">
+        <label for="numberField">Number: </label>
+        <input type="text" id="numberField" class="numberField">
+        <input type="submit" value="Check guess" class="numberSubmit" id="submitNumber">
+    </div>
+
+    <script type="text/javascript">
+
+        // random value generated
+        var actualValue = Math.floor(Math.random() * 100 + 1);
+
+        // counting the number of guesses
+        // made for correct Guess
+        var guess = 1;
+
+        document.getElementById("submitNumber").onclick = function () {
+
+            // number guessed by user	
+            var guessValue = document.getElementById("numberField").value;
+
+            if (guessValue == actualValue) {
+                alert("Correct in "
+                    + guess + " tries.");
+            }
+            else if (guessValue > actualValue) /* if guessed number is greater than actual number*/ {
+                guess++;
+                alert("Too big. Try again.");
+            }
+            else {
+                guess++;
+                alert("Too small. Try again.")
+            }
+        }
+    </script>
+</body>
+
+</html>

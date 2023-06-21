@@ -1,0 +1,12 @@
+Key: TDY
+Value: Temporary duty
+
+Key: another
+Value: this is another value without quotes
+
+Key: tdy
+Value: The new value starts with a capital letter.
+
+Key: dummy
+Value: You are no dummyu
+
