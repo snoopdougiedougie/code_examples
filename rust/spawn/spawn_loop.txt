@@ -1,0 +1,31 @@
+fn do_something_in_parallel() {
+    // Collection of things
+    let things = vec![
+        "thing1.ext",
+        "thing2.ext",
+        "thing3.ext",
+//        ...
+    ];
+
+    let mut handles = vec![];
+
+    for thing_path in things {
+        // Spawn a new thread for each thing task
+        handles.push(thread::spawn(move || {
+            // Load the thing from disk
+            let thg = thing::open(thing_path).expect("Failed to open the thing");
+
+            // OPERATION on the thing
+            let changed_thg = do_something(thg);
+
+            // Save the OPERATED thing to disk
+            let output_path = format!("OPERATED_{}", thing_path);
+            OPERATED_thg.save(output_path).expect("Failed to save the OPERATED thing");
+        }));
+    }
+
+    // Wait for all threads to finish
+    for handle in handles {
+        handle.join().unwrap();
+    }
+}
