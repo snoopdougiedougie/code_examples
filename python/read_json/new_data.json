@@ -1,0 +1,28 @@
+{
+	"details": [
+		{
+			"name": {
+				"first": "Doug",
+				"last": "Schwartz"
+			},
+			"email": "doug@nowhere.com",
+			"role": "developer"
+		},
+		{
+			"name": {
+				"first": "Sue",
+				"last": "Smith"
+			},
+			"email": "sue@nowhere.com",
+			"role": "analyst"
+		},
+		{
+			"name": {
+				"first": "Tom",
+				"last": "Thomson"
+			},
+			"email": "tom@nowhere.com",
+			"role": "pm"
+		}
+	]
+}

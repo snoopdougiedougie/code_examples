@@ -1,0 +1,229 @@
+Daily Tasks
+-----------
+
+# Create a new branch
+    Use mkBranch.sh
+
+# Check in changes
+    git add -A .
+    git commit -m "MESSAGE"
+    git push
+
+# Switch to another branch
+    git checkout BRANCH
+    git fetch 
+    # NO REBASE HERE!
+    merge origin/main
+
+After you fix merge conflicts, immediately do a 'git commit' with just the merge resolution,
+and only after that continue working on your feature if you want to.
+Be sure to put any other changes you want to make in a separate commit
+
+Pull Request
+------------
+
+Once you've made a pull request:
+
+git fetch origin
+git merge origin/main
+git push origin PREFIX/FILENAME
+
+Update list of all branches
+---------------------------
+    git remote update --prune
+
+List all branches
+-----------------
+    git branch -r
+
+Setup
+-----
+
+To set user name and password:
+
+   git config --global user.name "NAME"
+   git config --global user.email EMAIL
+
+Cloning
+-------
+
+To clone a repo (this gets all of the branches):
+
+   git clone https://...
+
+To just clone a single branch:
+
+   git clone ADDRESS --single-branch --branch BRANCH_NAME
+
+To get just the ABC folder from the XYZ repo to the ~/src directory on
+Linux:
+
+   cd ~/src
+   mkdir XYZ
+   cd XYZ
+   git init
+   git config core.sparsecheckout true
+   echo "ABC/" >> .git/info/sparse-checkout
+   git remote add -f origin PATH-TO-XYZ-ON-GITHUB
+   git pull origin main
+   git checkout main
+
+(Don't include the quote marks in Windows).
+
+To get the URL of the repo from the local folder:
+
+   git remote get-url origin
+
+
+Branches
+--------
+
+Update git's metadata to sync with remote:
+    git fetch --all -p
+
+Rebase local feature branch so it is in sync with remote branch,
+including its most recent changes.
+This command also puts local changes on top of the remote changes
+so your changes are grouped together.
+   
+    git rebase
+
+    git fetch origin
+    git rebase origin/main
+
+To update branch with changes in main since original checkout:
+
+    git merge origin/main
+    git push
+
+To see just the local branches:
+
+   git branch
+
+To see all remote branches and the local ones that you use:
+
+   git remote show origin
+
+Permanently delete a branch:
+
+   git branch -d BRANCH
+   git push origin --delete BRANCH
+
+Rename the current branch:
+
+   git branch -m NEW-NAME
+   git push origin :OLD-NAME
+   git branch --set-upstream-to=origin/NEW-NAME NEW-NAME
+
+Create a new branch and track it
+
+   git checkout main
+   git pull (just to make sure)
+   git checkout -b BRANCH
+   git push origin BRANCH
+   git branch --set-upstream-to=origin/BRANCH BRANCH
+
+Stash changes
+
+  git stash
+
+Then use "push -u" to push up to origin
+
+To list the changes in the current branch:
+
+   git log
+
+To list the changes in any branch:
+
+   git log BRANCH
+
+To list the changes in a file:
+
+   git log FILE
+
+Merging
+-------
+
+To merge BRANCH into main
+
+    git checkout main
+    git pull
+    git checkout BRANCH
+    git pull
+    git rebase -i main
+    git checkout main
+    git merge BRANCH
+    git push
+
+Rename a file
+-------------
+
+  git mv OLD_NAME NEW_NAME
+
+Diffing
+-------
+
+To see what files differ from the current branch to another branch:
+
+   git diff --name-only OTHER-BRANCH
+
+To see what's changed in a file that's not committed:
+
+   git diff FILENAME
+
+To see what's changed in a committed, but not pushed:
+
+  git diff --cached FILENAME
+
+To see what's different in a file from main
+
+   git diff ..mainline FILENAME
+
+To discard any changes in a file:
+
+   git reset HEAD FILENAME
+   git checkout FILENAME
+
+To reset the branch (you'll lose any uncommitted changes in the package):
+
+   git reset --hard origin/main
+
+To nuke the last commit/push (you'll lose ALL changes) YOU MUST DO THIS FROM THE REPO ROOT!:
+
+    git reset --hard HEAD~1
+
+To nuke EVERY change since commit HASH (40 chars, get it from git log):
+
+    First set main to unprotected:
+        [repo] > Settings > Repository > Protected Branches
+
+    git reset --hard COMMIT-HASH
+    git push -f origin main
+
+Restore a file you accidentaly deleted
+--------------------------------------
+
+1. Find the commit you want for the file:
+
+   git log -p FILENAME
+
+   You'll see stuff like:
+
+   commit 123...
+   Author: NAME <GITHUB-ID>
+   Date:   DATE and TIME
+
+       Revert "Moving examples for Java into single folder"
+
+   Note the commit # (in this case 123...)
+
+2. Restore the file with:
+
+   git checkout COMMIT# -- FILENAME
+
+Squish N Commits into One (say for a PR):
+-----------------------------------------
+
+Where N is what you see in the "Commits N" for the PR
+
+git rebase -i HEAD~N

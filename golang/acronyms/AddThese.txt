@@ -1,0 +1,29 @@
+All in the context of AI:
+
+LLM
+Foundation Model
+Multimodal Model
+Active Learning
+Embeddings
+Data Connectors
+Robust APIs
+Optimization
+Monitoring
+
+Using AI:
+
+    Use prompts to cleanup data
+
+    Summarize reports in seconds with text summarization
+
+    Deliver more accurate and relevant search results
+
+    Enable visual search to shop by image
+
+    Moderate content seamlessly with toxicity detection
+
+    Organize data faster with clustering algorithms
+
+    Automatically categorize customer support tickets
+
+    Analyze customer sentiment to understand feedback

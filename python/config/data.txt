@@ -1,0 +1,9 @@
+name: Doug
+email: doug@nowhere.com
+role: developer
+name: Sue
+email: sue@nowhere.com
+role: analyst
+name: Tom
+email: tom@nowhere.com
+role: pm
