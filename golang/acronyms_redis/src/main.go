@@ -75,7 +75,6 @@ func getKeyValueFromUser() string {
 func getKeyValue(rdb *redis.Client, ctx context.Context, key string) string {
 	value, err := rdb.Get(ctx, key).Result()
 	if err != nil {
-		fmt.Println("Key " + key + " does not exist")
 		return ""
 	}
 
@@ -93,17 +92,17 @@ func createLocalClient() *redis.Client {
 }
 
 // Prompt user for key and value, then add the new key/value
-func addNewKey(debug bool, rdb *redis.Client, ctx context.Context) {
+func addKeyValue(debug bool, rdb *redis.Client, ctx context.Context) {
 	key := getKeyName()
 	value := getKeyValueFromUser()
 
-	addKeyValue(debug, rdb, ctx, key, value)
+	setKeyValue(debug, rdb, ctx, key, value)
 }
 
-// Add new key/value pair to DB
-func addKeyValue(debug bool, rdb *redis.Client, ctx context.Context, key string, value string) {
+// Set key/value pair
+func setKeyValue(debug bool, rdb *redis.Client, ctx context.Context, key string, value string) {
 	debugPrint(debug, "Key: " + key + ", Value: " + value)
-
+	
 	err := rdb.Set(ctx, key, value, 0).Err()
 	if err != nil {
 		fmt.Println("Could not set key", key)
@@ -219,18 +218,21 @@ func showKeysValues(debug bool, rdb *redis.Client, ctx context.Context) {
 	}
 }
 
-func updateValue(debug bool, rdb *redis.Client, ctx context.Context) {
-	// If we don't have a value for the key, it doesn't exist
+func updateKeyValue(debug bool, rdb *redis.Client, ctx context.Context) {
+	// If we have a value for the key, it exists
 	key := getKeyName()
 	value := getKeyValue(rdb, ctx, key)
 
-	if value != "" {
+	if value == "" {
+		println("Key does not exist")
+		println()
+	} else {
 		debugPrint(debug, "Updating key: " + key)
 		val := getKeyValueFromUser()
 		debugPrint(debug, "From value: "+ value)
 		debugPrint(debug, "To value:   " + val)
 	
-		addKeyValue(debug, rdb, ctx, key, val)
+		setKeyValue(debug, rdb, ctx, key, val)
 	}
 }
 
@@ -305,16 +307,18 @@ func main() {
 		fmt.Println("  a(dd) key/value pair to table")
 		fmt.Println("  p(rint) key/value pairs")
 		fmt.Println("  r(emove) key/value pair")
+		fmt.Println("  s(how) key/value pairs")
 		fmt.Println("  u(pdate) value for key")
 		fmt.Println("  q(uit)")
 		fmt.Println()
 
 		// Get operation from user
 		fmt.Scanln(&op)
+		fmt.Println()
 
 		switch op {
 		case "a":
-			addNewKey(*debugPtr, rdb, ctx)
+			addKeyValue(*debugPtr, rdb, ctx)
 		case "p":
 			printKeysValues(*debugPtr, rdb, ctx, outputPtr, filePtr)
 		case "r":
@@ -322,7 +326,7 @@ func main() {
 		case "s":
 			showKeysValues(*debugPtr, rdb, ctx)
 		case "u":
-			updateValue(*debugPtr, rdb, ctx)
+			updateKeyValue(*debugPtr, rdb, ctx)
 		case "q":
 			done = true
 		case "":
@@ -335,30 +339,4 @@ func main() {
 			break
 		}
 	}
-
-
-	
-
-	
-
-	
-
-	/*
-	   val, err := rdb.Get(ctx, "key").Result()
-	   if err != nil {
-	       panic(err)
-	   }
-	   fmt.Println("key", val)
-
-	   val2, err := rdb.Get(ctx, "key2").Result()
-	   if err == redis.Nil {
-	       fmt.Println("key2 does not exist")
-	   } else if err != nil {
-	       panic(err)
-	   } else {
-	       fmt.Println("key2", val2)
-	   }
-	   // Output: key value
-	   // key2 does not exist
-	*/
 }

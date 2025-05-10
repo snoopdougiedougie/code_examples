@@ -375,7 +375,18 @@ func showKeyValuePairs(debugPtr *bool, svc *dynamodb.Client, tableName *string) 
 
 func getKeyValue(debugPtr *bool, svc *dynamodb.Client, tableName *string, key string) string {
 	// Convert table items into array of glossary entries
+<<<<<<< HEAD
 	var entries = getTableItems(debugPtr, svc, tableName, false)
+=======
+	var entries []Entry
+	err = attributevalue.UnmarshalListOfMaps(result.Items, &entries)
+	if err != nil {
+
+fmt.Println("Couldn't unmarshal query response")
+		fmt.Println(err)
+		os.Exit(1)
+	}
+>>>>>>> 52162d6 (Nuked old acronym files.)
 
 	for _, entry := range entries {
 		if key == entry.Key {
